@@ -6,6 +6,7 @@ import Library.Window
 import Library.Graphics
 
 Library.Window.Settings("[Your Game Title]", 1000, 800)
+Font = "Assets/Font/[NAME OF FONT].ttf"
 
 pygame.init()
 
@@ -18,40 +19,18 @@ setCharnum = 1
 
 image = pygame.image.load('Assets/image.png')
 
-def setStat(CharNum):
-	if CharNum == 1:
-		Player.vel = 4
-	if CharNum == 2:
-		Player.vel = 8
-	if CharNum == 3:
-		Player.vel = 12
-
-def setSprite(setChar):
-	if setChar == 1:
-		setStat(1)
-		if Player.Idle:
-			pygame.draw.rect(Library.Window.Frame, Player.player_color, (Player.x, Player.y,Player.width,Player.height))
-			Library.Graphics.Draw_Image(Library.Window.Frame, image, Player.x, Player.y, Player.width, Player.height)
-		if Player.left:
-			pygame.draw.rect(Library.Window.Frame, Player.player_color, (Player.x, Player.y,Player.width,Player.height))
-		elif Player.right:
-			pygame.draw.rect(Library.Window.Frame, Player.player_color, (Player.x, Player.y,Player.width,Player.height))
-	elif setChar == 2:
-		setStat(2)
-		if Player.Idle:
-			pygame.draw.rect(Library.Window.Frame, Player.player_color, (Player.x, Player.y,Player.width,Player.height))
-		if Player.left:
-			pygame.draw.rect(Library.Window.Frame, Player.player_color, (Player.x, Player.y,Player.width,Player.height))
-		elif Player.right:
-			pygame.draw.rect(Library.Window.Frame, Player.player_color, (Player.x, Player.y,Player.width,Player.height))
-	elif setChar == 3:
-		setStat(3)
-		if Player.Idle:
-			pygame.draw.rect(Library.Window.Frame, Player.player_color, (Player.x, Player.y,Player.width,Player.height))
-		if Player.left:
-			pygame.draw.rect(Library.Window.Frame, Player.player_color, (Player.x, Player.y,Player.width,Player.height))
-		elif Player.right:
-			pygame.draw.rect(Library.Window.Frame, Player.player_color, (Player.x, Player.y,Player.width,Player.height))	
+def setPlayerDrawing():
+	Player.Set_DebugBox(False, Library.Window.Frame, Player.player_color, Player.x, Player.y,Player.width,Player.height)
+	if Player.Idle:
+		Player.Draw_Player(Library.Window.Frame, image, Player.x, Player.y, Player.width, Player.height)
+	elif Player.left:
+		Player.Draw_Player(Library.Window.Frame, image, Player.x, Player.y, Player.width, Player.height)
+	elif Player.right:
+		Player.Draw_Player(Library.Window.Frame, image, Player.x, Player.y, Player.width, Player.height)
+	elif Player.down:
+		Player.Draw_Player(Library.Window.Frame, image, Player.x, Player.y, Player.width, Player.height)
+	elif Player.up:
+		Player.Draw_Player(Library.Window.Frame, image, Player.x, Player.y, Player.width, Player.height)
 			
 def setCollisons():
 	collisons = Library.Object.Collison(Player.x,Player.y,Player.width,Player.height,rectx,recty,rectwidth,rectheight)
@@ -64,8 +43,8 @@ def setCollisons():
 def renderObjects():
 	Library.Window.Frame.fill(Library.ColorCode.White)	
 	
-	Library.Window.RenderText(Library.Window.Frame, 'speed: ' + str(setCharnum),30, 30,50, (0,0,0), '/usr/share/fonts/truetype/freefont/FreeMono.ttf')
-	setSprite(setCharnum)
+	Library.Window.RenderText(Library.Window.Frame, 'speed: ' + str(setCharnum),30, 30,50, (0,0,0), Font)
+	setPlayerDrawing()
 	setCollisons()
 	pygame.display.update()
 
@@ -81,34 +60,42 @@ while run:
 	
 	if keys[pygame.K_a]:
 		Library.Object.Camx -= Player.vel
-		Player.left = True
+		Player.Idle - False	
 		Player.right = False
-		Player.Idle = False
-	else:
-		right = False
-		left = False
-		Idle = True
-	
-	if keys[pygame.K_d]:
+		Player.left = True
+		Player.down = False
+		Player.Up = False
+
+	elif keys[pygame.K_d]:
 		Library.Object.Camx += Player.vel
+		Player.Idle - False	
 		Player.right = True
 		Player.left = False
-		Player.Idle = False
-	else:
+		Player.down = False
+		Player.Up = False
+
+	elif keys[pygame.K_w]:
+		Library.Object.Camy -= Player.vel
+		Player.Idle - False	
 		Player.right = False
-		Player.Left = False
-		Player.Idle = True
+		Player.left = False
+		Player.down = False
+		Player.Up = True
 	
-	if keys[pygame.K_w]:
-		Library.Object.Camy -= Player.vel	
-	
-	if keys[pygame.K_s]:
-		Library.Object.Camy += Player.vel	
-	
-	if keys[pygame.K_i]:
-		setCharnum += 1
-		if setCharnum > 3:
-			setCharnum = 1
+	elif keys[pygame.K_s]:
+		Library.Object.Camy += Player.vel
+		Player.Idle - False	
+		Player.right = False
+		Player.left = False
+		Player.down = True
+		Player.Up = False
+
+	else:
+		Player.Idle - True	
+		Player.right = False
+		Player.left = False
+		Player.down = False
+		Player.Up = False
 		
 	renderObjects()
 			

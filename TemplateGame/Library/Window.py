@@ -2,8 +2,8 @@ import os
 import pygame
 
 Title = ""
-window_width = 0
-window_height = 0
+window_width = 1200
+window_height = 800
 FPS = 60
 
 Frame = pygame.display.set_mode((window_width, window_height))
