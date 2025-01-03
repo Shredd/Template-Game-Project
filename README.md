@@ -1,7 +1,7 @@
 | Template-Game-Project |
 
 
-- BEFORE 2024 -
+- BEFORE 2024
 
 This is a Template Game i made in python3 using the pygame library
 
@@ -15,7 +15,8 @@ sudo apt-get install python3-pygame
 
 
 
-UPDATE: 2024
+
+ - UPDATE: 2024
 
 
 this project has been updated with some bug fixing and cleaned Up Code, and has been tested
