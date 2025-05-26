@@ -16,7 +16,7 @@ to install pygame, in the terminal you can use the following command:
 sudo apt-get install python3-pygame
 
 
-
+---
 
  - UPDATE: 2024
 
